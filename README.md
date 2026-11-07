@@ -6,12 +6,7 @@ Tested on Fedora 44 with GNOME Shell 50.6 (Mutter 50.5) and libinput 1.31.3.
 
 ## Install
 
-You need these extensions first, from [extensions.gnome.org](https://extensions.gnome.org):
-
-- [Dash to Dock](https://extensions.gnome.org/extension/307/dash-to-dock/)
-- [Impatience](https://extensions.gnome.org/extension/277/impatience/)
-
-Then run this in your GNOME session, without root:
+You need [Dash to Dock](https://extensions.gnome.org/extension/307/dash-to-dock/) from extensions.gnome.org first. Then run this in your GNOME session, without root:
 
 ```bash
 ./install.sh
@@ -51,13 +46,13 @@ ioreg -r -c AppleUserHIDEventService -l -w0 | grep -m1 '"HIDAccelCurves" = '
 
 [`dconf/dash-to-dock.ini`](dconf/dash-to-dock.ini) sets Dash to Dock to:
 
-- Stay hidden until the pointer touches the bottom edge, with no delay or pressure needed.
+- Stay hidden, and appear as soon as the pointer touches the bottom edge. This uses pressure mode at 1 px with no delay. Without pressure, Dash to Dock checks the edge only every 100 ms, and it cancels the reveal if you click first, so clicks miss the dock.
 - Show one dot for each running app, and use the Mac's icon size (46).
 - Bring an app forward on click, with a second click doing nothing.
 - Hide mounted drives.
 - Keep Show Apps as the first icon. This one is on purpose and differs from my Mac.
 
-The Mac's slide time comes from timing the real Dock, not from its setting. `autohide-time-modifier` is 0.5, but the slide takes about 110 ms in and 120 ms out. `animation-time` here is 0.23 because Impatience halves animation times ([`dconf/impatience.ini`](dconf/impatience.ini)), which gives about 115 ms. If you disable Impatience, change it to 0.115.
+The Mac's slide time comes from timing the real Dock, not from its setting. `autohide-time-modifier` is 0.5, but the slide takes about 110 ms in and 120 ms out. `animation-time` here is 0.115, which gives about 115 ms. GNOME Shell multiplies it by its animation speed factor, so an extension that speeds up animations, such as Impatience at 0.5, would halve it. In that case use 0.23.
 
 `dash-to-dock.ini` is a snapshot of one machine, so `preferred-monitor-by-connector` may need changing on yours.
 
@@ -91,7 +86,6 @@ Run this, then log out and back in. It also clears any other changes you've made
 ```bash
 rm ~/.config/libinput/plugins/10-macos-pointer-accel.lua
 dconf reset -f /org/gnome/shell/extensions/dash-to-dock/
-dconf reset -f /org/gnome/shell/extensions/net/gfxmonk/impatience/
 dconf reset -f /org/gnome/desktop/peripherals/mouse/
 dconf reset -f /org/gnome/desktop/peripherals/trackball/
 ```

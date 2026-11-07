@@ -9,7 +9,6 @@ install -Dm644 mouse/10-macos-pointer-accel.lua \
 
 dconf load /org/gnome/desktop/peripherals/mouse/ < dconf/mouse.ini
 dconf load /org/gnome/desktop/peripherals/trackball/ < dconf/trackball.ini
-dconf load /org/gnome/shell/extensions/net/gfxmonk/impatience/ < dconf/impatience.ini
 dconf load /org/gnome/shell/extensions/dash-to-dock/ < dconf/dash-to-dock.ini
 
 echo "Done. Log out and back in once so Mutter loads the mouse plugin."
